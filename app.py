@@ -15,16 +15,17 @@ app = Flask(__name__)
 CORS(app)
 
 # --- CONFIGURATION ---
-# ⚠️ REPLACE WITH YOUR ACTUAL TOKEN
+# Load token from Environment Variable (Set this in Render Dashboard)
 HF_TOKEN = os.getenv("HF_TOKEN")
 
 if not HF_TOKEN:
-    raise ValueError("No HF_TOKEN found in environment variables!")
-    
-# 1. Text Client (Qwen 2.5)
+    # Fallback for local testing if .env is missing (Optional warning)
+    print("WARNING: No HF_TOKEN found in environment variables. App may fail.")
+
+# 1. Text Client (Qwen 2.5 - Smart & Multilingual)
 text_client = InferenceClient(model="Qwen/Qwen2.5-72B-Instruct", token=HF_TOKEN)
 
-# 2. Image Client (SDXL)
+# 2. Image Client (SDXL - High Quality Art)
 image_client = InferenceClient(model="stabilityai/stable-diffusion-xl-base-1.0", token=HF_TOKEN)
 
 # --- HELPER: CLEAN TEXT ---
@@ -89,9 +90,8 @@ def draw_text_on_image(img, business_name, slogan):
 
     return img
 
-# --- HELPER: ROBUST VISION QUERY ---
+# --- HELPER: ROBUST VISION QUERY (Router URL) ---
 def query_vision_api(img_bytes, token):
-    # Using the stable Router URL
     model = "Salesforce/blip-image-captioning-base"
     api_url = f"https://router.huggingface.co/hf-inference/models/{model}"
     headers = {"Authorization": f"Bearer {token}"}
@@ -118,7 +118,12 @@ def query_vision_api(img_bytes, token):
             
     return None
 
-# --- ENDPOINT 1: ANALYZE IMAGE ---
+# --- ROUTES ---
+
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({"status": "active", "message": "Desi-Scribe Backend is Running!"})
+
 @app.route('/analyze-image', methods=['POST'])
 def analyze_image():
     try:
@@ -167,7 +172,6 @@ def analyze_image():
         traceback.print_exc()
         return jsonify({"status": "error", "error": str(e)}), 500
 
-# --- ENDPOINT 2: GENERATE SLOGAN (Multilingual) ---
 @app.route('/generate-slogan', methods=['POST'])
 def generate_slogan():
     try:
@@ -183,7 +187,6 @@ def generate_slogan():
     except Exception as e:
         return jsonify({"status": "error", "error": str(e)}), 500
 
-# --- ENDPOINT 3: GENERATE IMAGE ---
 @app.route('/generate-image', methods=['POST'])
 def generate_image():
     try:
@@ -197,7 +200,6 @@ def generate_image():
     except Exception as e:
         return jsonify({"status": "error", "error": str(e)}), 500
 
-# --- ENDPOINT 4: GENERATE POSTER (Multilingual) ---
 @app.route('/generate-poster', methods=['POST'])
 def generate_poster():
     try:
