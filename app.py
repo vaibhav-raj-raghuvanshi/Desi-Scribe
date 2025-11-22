@@ -16,8 +16,11 @@ CORS(app)
 
 # --- CONFIGURATION ---
 # ⚠️ REPLACE WITH YOUR ACTUAL TOKEN
-HF_TOKEN = "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"
+HF_TOKEN = os.getenv("HF_TOKEN")
 
+if not HF_TOKEN:
+    raise ValueError("No HF_TOKEN found in environment variables!")
+    
 # 1. Text Client (Qwen 2.5)
 text_client = InferenceClient(model="Qwen/Qwen2.5-72B-Instruct", token=HF_TOKEN)
 
