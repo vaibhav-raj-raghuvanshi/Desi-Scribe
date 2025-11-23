@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +10,30 @@
 </head>
 
 <body>
+
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-box">
+            <h2>🔐 Desi-Scribe Login</h2>
+            <p>Please sign in to generate content.</p>
+
+            <input type="text" id="usernameInput" placeholder="Username" style="margin-bottom: 10px;">
+            <input type="password" id="passwordInput" placeholder="Password">
+
+            <button onclick="attemptLogin()" class="desi-btn" style="margin-top: 15px; width: 100%;">Sign In</button>
+
+            <p id="loginError" style="color: #ff4d4d; display: none; margin-top: 10px; font-size: 14px;">❌ Incorrect
+                Username or Password</p>
+
+            <div
+                style="margin-top: 25px; padding: 15px; background: rgba(88, 118, 255, 0.1); border: 1px dashed #5876ff; border-radius: 10px; font-size: 0.9rem;">
+                <p style="margin: 0; color: #ccc; font-weight: bold;">Try Demo Access:</p>
+                <p style="margin: 5px 0 0 0; color: #fff;">
+                    User: <span style="color: #5876ff;">guest</span> &nbsp;|&nbsp; Pass: <span
+                        style="color: #5876ff;">desi2025</span>
+                </p>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
         <div class="robot-box">
@@ -68,16 +91,27 @@
                         <option value="Humorous">Tone: Humorous</option>
                         <option value="Luxury">Tone: Luxury</option>
                     </select>
+
+                    <select id="formatSelect">
+                        <option value="Square">🟦 Post (1:1)</option>
+                        <option value="Story">📱 Story (9:16)</option>
+                        <option value="Landscape">🎬 Poster (4:3)</option>
+                    </select>
                 </div>
 
-                <textarea id="productDesc" placeholder="Describe product details..."></textarea>
+                <div class="textarea-wrapper" style="position: relative;">
+                    <textarea id="productDesc" placeholder="Describe product or click Mic..."></textarea>
+                    <button id="micBtn" class="mic-icon" title="Speak Description">
+                        <i class="fa-solid fa-microphone"></i>
+                    </button>
+                </div>
 
                 <div class="action-buttons">
                     <button id="generateSloganBtn" class="action-btn slogan-btn">
                         <i class="fa-solid fa-pen-nib"></i> Slogan
                     </button>
                     <button id="generatePosterBtn" class="action-btn poster-btn">
-                        <i class="fa-solid fa-clapperboard"></i> Poster
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
                     </button>
                 </div>
             </div>
