@@ -15,7 +15,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 app = Flask(__name__)
 CORS(app)
 
---- CONFIGURATION ---
+#--- CONFIGURATION ---
 HF_TOKEN = os.getenv("HF_TOKEN")
 if not HF_TOKEN:
     print("⚠️ WARNING: No HF_TOKEN found. App might fail.")
