@@ -200,3 +200,45 @@ textarea { resize: none; height: 60px; }
     background: #5876ff;
     transform: scale(1.1);
 }
+/* Add this to the bottom of style.css */
+
+.textarea-wrapper {
+    width: 100%;
+    position: relative;
+}
+
+.mic-icon {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: rgba(31, 41, 64, 0.8);
+    color: #5876ff;
+    border: 1px solid #5876ff;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.mic-icon:hover {
+    background: #5876ff;
+    color: white;
+}
+
+/* Animation for when recording is active */
+.mic-icon.listening {
+    background: #ff4d4d;
+    color: white;
+    border-color: #ff4d4d;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 77, 77, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
+}
